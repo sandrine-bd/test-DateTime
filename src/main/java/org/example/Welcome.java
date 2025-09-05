@@ -5,10 +5,14 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Welcome {
+
     public String getMessage() {
-        LocalDateTime now = LocalDateTime.now();
-        DayOfWeek day = now.getDayOfWeek();
-        LocalTime time = now.toLocalTime();
+        return getMessage(LocalDateTime.now());
+    }
+
+    public String getMessage(LocalDateTime dateTime) {
+        DayOfWeek day = dateTime.getDayOfWeek();
+        LocalTime time = dateTime.toLocalTime();
 
         LocalTime nineAM = LocalTime.of(9, 0);
         LocalTime onePM = LocalTime.of(13, 0);
@@ -22,7 +26,7 @@ public class Welcome {
             return "Bon week-end";
             }
 
-        // 18h-9h lundi, mardi, mercredi, jeudi
+        // lundi, mardi, mercredi, jeudi 18h-9h
         if ((time.isAfter(sixPM) && time.isBefore(nineAM)) &&
                 ((day == DayOfWeek.MONDAY) || (day == DayOfWeek.TUESDAY) ||
                 (day == DayOfWeek.WEDNESDAY) || (day == DayOfWeek.THURSDAY))) {
@@ -33,10 +37,10 @@ public class Welcome {
         if ((day == DayOfWeek.MONDAY) || (day == DayOfWeek.TUESDAY) ||
                 (day == DayOfWeek.WEDNESDAY) || (day == DayOfWeek.THURSDAY) ||
                 (day == DayOfWeek.FRIDAY)) {
-            if (time.isAfter(onePM) && time.isBefore(sixPM)) {
+            if (time.isAfter(onePM) && time.isBefore(sixPM)) { // 13h-18h
                 return "Bon après-midi";
             }
-            if (time.isAfter(nineAM) && time.isBefore(onePM)) {
+            if (time.isAfter(nineAM) && time.isBefore(onePM)) { // 9h-13h
                 return "Bonjour";
             }
         }
