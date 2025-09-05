@@ -18,32 +18,27 @@ public class Welcome {
         LocalTime onePM = LocalTime.of(13, 0);
         LocalTime sixPM = LocalTime.of(18, 0);
 
-        // vendredi 18h - lundi 9h
+        // Cas particulier du week-end (vendredi 18h -> lundi 9h)
         if ((day == DayOfWeek.FRIDAY && time.isAfter(sixPM)) ||
                 (day == DayOfWeek.SATURDAY) ||
                 (day == DayOfWeek.SUNDAY) ||
                 (day == DayOfWeek.MONDAY && time.isBefore(nineAM))) {
             return "Bon week-end";
-            }
-
-        // lundi, mardi, mercredi, jeudi 18h-9h
-        if ((time.isAfter(sixPM) && time.isBefore(nineAM)) &&
-                ((day == DayOfWeek.MONDAY) || (day == DayOfWeek.TUESDAY) ||
-                (day == DayOfWeek.WEDNESDAY) || (day == DayOfWeek.THURSDAY))) {
-            return "Bonsoir";
         }
 
-        // lundi, mardi, mercredi, jeudi, vendredi
-        if ((day == DayOfWeek.MONDAY) || (day == DayOfWeek.TUESDAY) ||
-                (day == DayOfWeek.WEDNESDAY) || (day == DayOfWeek.THURSDAY) ||
-                (day == DayOfWeek.FRIDAY)) {
-            if (time.isAfter(onePM) && time.isBefore(sixPM)) { // 13h-18h
-                return "Bon après-midi";
-            }
-            if (time.isAfter(nineAM) && time.isBefore(onePM)) { // 9h-13h
+        // Cas en semaine
+        if (day.getValue() >= DayOfWeek.MONDAY.getValue() &&
+                day.getValue() <= DayOfWeek.FRIDAY.getValue()) {
+
+            if (!time.isBefore(nineAM) && time.isBefore(onePM)) {
                 return "Bonjour";
+            } else if (!time.isBefore(onePM) && time.isBefore(sixPM)) {
+                return "Bon après-midi";
+            } else {
+                return "Bonsoir";
             }
         }
+
         return "Bienvenue";
     }
 }
